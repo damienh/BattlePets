@@ -3,7 +3,7 @@
 A like-for-like browser reimplementation of **BattlePets V1.0** (T2R Associates /
 Thom Robertson, 1999), rebuilt by reverse-engineering the original `BattlePets.exe`.
 
-This project contains **no original content**. Stats, spells, wizard teams, dialogue,
+Apart from the screenshot below, this project contains **no original content**. Stats, spells, wizard teams, dialogue,
 art, sounds and mazes are all read at runtime from your own copy of the game, the
 way OpenTTD or OpenRCT2 use original data files.
 
@@ -22,7 +22,9 @@ npm start -- --original /path/to/BattlePets   # http://localhost:8080/
 `--original` points at your BattlePets install: the folder containing
 `BattlePets.exe`, `help.dat` and `dat/`. Add `--port N` to use another port. The
 server serves this project and your install, and resolves file names
-case-insensitively, as on Windows. Click **Click to play** to
+case-insensitively, as on Windows.
+
+![Title menu: Start New Game, Load Game, Gameplay Options, Credits, Quit to Desktop](docs/images/title-menu.png) Click **Click to play** to
 start (browsers need a click before playing sound).
 
 Saves use the original `.gam` text format, so saves from the 1999 game load here

@@ -17,7 +17,11 @@ const WIZARD_COUNT = 6;
 
 const WIZARD_INTRO_VAS = [0x426b7c, 0x426b28, 0x426ad4, 0x426aa8, 0x426a58, 0x4269d8];
 const WIZARD_DEFEAT_VAS = [0x426e38, 0x426d9c, 0x426d04, 0x426c98, 0x426c3c, 0x426bfc];
+// Per-spell wave files for the cast / fly / impact phases (0x404c70); "X" = none.
+const SPELL_SOUNDS = { cast: 0x1f828, fly: 0x20128, impact: 0x20a28, stride: 64 };
+
 const TEXT_VAS = {
+  credits: 0x422244,
   homeRest: 0x421c90,
   towerLost: 0x4269a4,
 };
@@ -41,10 +45,20 @@ function records(table, read) {
   return Array.from({ length: table.count }, (_, i) => read(table.offset + i * table.stride, i));
 }
 
+function spellSound(view, table, id) {
+  const path = cString(view, table + id * SPELL_SOUNDS.stride, SPELL_SOUNDS.stride);
+  return path.startsWith('X') ? null : path;
+}
+
 function parseSpells(view) {
-  return records(SPELLS, (o) => {
+  return records(SPELLS, (o, i) => {
     const [damage, ...effects] = floats(view, o + 0x44, 8);
-    return { id: i32(view, o), name: cString(view, o + 4, 64), damage, effects };
+    const sounds = {
+      cast: spellSound(view, SPELL_SOUNDS.cast, i),
+      fly: spellSound(view, SPELL_SOUNDS.fly, i),
+      impact: spellSound(view, SPELL_SOUNDS.impact, i),
+    };
+    return { id: i32(view, o), name: cString(view, o + 4, 64), damage, effects, sounds };
   });
 }
 

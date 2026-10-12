@@ -12,7 +12,12 @@ test('rejects a buffer that is not the v1.0 executable', () => {
 test('parses 36 spells with names and 8 effect floats', opts, () => {
   const { spells } = parseExe(loadExe());
   assert.equal(spells.length, 36);
-  assert.deepEqual(spells[0], { id: 0, name: 'Zap', damage: 1, effects: [0, 0, 0, 0, 0, 0, 0] });
+  assert.deepEqual(spells[0], {
+    id: 0, name: 'Zap', damage: 1, effects: [0, 0, 0, 0, 0, 0, 0],
+    sounds: { cast: 'dat\\spell\\missray1.wav', fly: 'dat\\spell\\shot9.wav', impact: 'dat\\spell\\damage.wav' },
+  });
+  assert.deepEqual(spells[8].sounds, { cast: 'dat\\spell\\powerup.wav', fly: null, impact: null });
+  assert.equal(spells[3].sounds.cast, null);
   assert.equal(spells[2].name, 'Hypnotize');
   assert.equal(spells[2].effects[0], 0.5);
   assert.equal(spells[35].name, 'Light Speed');

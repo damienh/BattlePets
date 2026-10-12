@@ -1,5 +1,7 @@
 # BattlePets
 
+![Title menu: Start New Game, Load Game, Gameplay Options, Credits, Quit to Desktop](docs/images/title-menu.png)
+
 A like-for-like browser reimplementation of **BattlePets V1.0** (T2R Associates /
 Thom Robertson, 1999), rebuilt by reverse-engineering the original `BattlePets.exe`.
 
@@ -23,9 +25,6 @@ npm start -- --original /path/to/BattlePets   # http://localhost:8080/
 `BattlePets.exe`, `help.dat` and `dat/`. Add `--port N` to use another port. The
 server serves this project and your install, and resolves file names
 case-insensitively, as on Windows.
-
-![Title menu: Start New Game, Load Game, Gameplay Options, Credits, Quit to Desktop](docs/images/title-menu.png) Click **Click to play** to
-start (browsers need a click before playing sound).
 
 Saves use the original `.gam` text format, so saves from the 1999 game load here
 and the other way round. *Save Game* downloads a `.gam` file and *Load Game* opens

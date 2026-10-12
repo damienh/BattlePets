@@ -11,6 +11,7 @@ import {
 import { addPartyButtons, drawPartyBar } from './partyBar.js';
 import { InspectMode } from './inspect.js';
 import { CombatFx } from './combatFx.js';
+import { rand } from '../game/rng.js';
 
 const ID = Object.freeze({ RETREAT: 0, CHANGE: 1, CATCH: 2, FIRST_SLOT: 3, FIRST_SPELL: 9 });
 export const PLAYER_POS = [168, 150];
@@ -53,6 +54,11 @@ export class CombatMode extends Mode {
     this.buttons.addText(ID.CHANGE, 'Change', [540, 320, 640, 345]);
     this.buttons.addText(ID.RETREAT, 'Retreat', [540, 345, 640, 370]);
     this.battle = battle;
+    this.fx.useRandom(() => {
+      const r = rand(this.battle.seed);
+      this.battle = { ...this.battle, seed: r.seed };
+      return r.value;
+    });
     this.spellsFor = -1;
     this.rebuildSpells();
     this.playCues(cues);

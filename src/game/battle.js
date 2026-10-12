@@ -26,7 +26,10 @@ const tplOf = (ctx, pet) => ctx.pets[pet.templateId];
 const player = (b) => b.party[b.active];
 const setPlayer = (b, pet) => ({ ...b, party: b.party.map((p, i) => (i === b.active ? pet : p)) });
 const spellOf = (ctx, pet, slot) => ctx.spells[tplOf(ctx, pet).spells[slot]];
-const at = (b, phase, timer = b.timer) => ({ ...b, phase, timer });
+// `reload` mirrors the original's timer reload value (0x194), used by animations.
+const at = (b, phase, timer) => (timer === undefined
+  ? { ...b, phase }
+  : { ...b, phase, timer, reload: timer });
 const out = (battle, cues = []) => ({ battle, cues });
 const spellCue = (phase, b) => ({ type: 'spell', phase, spellId: b.spellId });
 
@@ -66,7 +69,7 @@ function withActor(ctx, b, playerActing) {
 export function startBattle(ctx, { party, opponents, wild, seed }) {
   const T = textDelay(ctx.textSpeed);
   const base = {
-    phase: PHASE.CHOOSE, timer: 2 * T, T,
+    phase: PHASE.CHOOSE, timer: 2 * T, reload: 2 * T, T,
     party, active: firstHealthy(party), opponents, opponentIndex: 0, wild,
     enemy: null, playerSpell: 0, enemySpell: 0, spellId: 0,
     playerActing: false, playerDone: false, enemyDone: false, hit: false,

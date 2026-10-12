@@ -131,3 +131,33 @@ Vile Wizard (5) defeated → `win1.bmp`.
 `%d %d` current location map x y; 6× (`YES` + name line + `%d %d %d %d` id? level xp hp | `NO`);
 visible flags `1 `/`0 ` per location; wizard defeated `%d ` ×6;
 `difficulty textSpeed gender caughtBefore`; item names; `ITEMEND`.
+
+## Presentation layer
+
+* Frame loop: 33 ms ticks (GetTickCount, 0x409559). Fonts (0x4096c0): 0-3 Arial Bold
+  14/16/24/32, 4 System 10, 5 fixedsys 10, 6/7 Arial 12/9, 8 Arial Bold 20.
+* Blits: flag 0 = centred, 1 = top-left; black is the colour key. 0x411040 is a
+  saturating additive blend ("translucency blitting") used for the map cloud,
+  spell sprites and combat particles.
+* Buttons (0x411e30): normal (180,180,230), hover (100,255,100); the last added
+  button starts current; hover persists; Up/Down cycle; Enter/Space activate.
+* Party boxes (0x40f630): slot i at (6+105i, 375); HP bar 5 px wide on the right,
+  "Level: n" and name with black shadows, "Fainted!" in font 3.
+* Screens and rects: main menu buttons y 280/310/340/370/410; options toggles
+  cycle gender 0..1 (1 = male), difficulty 0..2, text speed 1..10; map hover
+  label (255,255,55) at (x±70, y+20..40), "Defeated" red, cloud additive at y 40
+  scrolling +1/frame; tower portrait (100,170), text (220,80,540,330), button
+  "Battle!" -> "Leave Tower"; home/market text (100,80,540,330); temple text
+  (100,80,540,300) with the page index kept between visits; event panel at (7,54),
+  text (120,130,520,370); inspect columns BASICS (180,10) values +90, SPELLS
+  (400,10), STATUS (100,200) values +120, RESISTANCE right-aligned to x 410.
+* Maze: tiles 109x28 (half step 54x14), wall/floor bottoms at the floor line,
+  markers bob by sin(frame%20 * pi/10)*5+40, minimap 2 px/cell at (4,4)
+  (walls green, you blue, events red), walk 7 frames, mirrored sprites for the
+  left-hand directions, gender 1 = walk/boy sprites, 0 = gwalk/girlf.
+* Weather by maze index: 0 petals x1/frame, 1-2 drips every 5 frames, 3 snow x3,
+  4 none, 5 rain x10. Ambient loops: forest, drip, drip, wind, castle, rain.
+* Spell sounds: three 36-entry tables of 64-byte paths at 0x41f828 / 0x420128 /
+  0x420a28 (cast / fly / impact), "X" = silent.
+* Spell effects: see src/modes/combatFx.js (projectiles, two global emitters,
+  15 flr-* sprites).

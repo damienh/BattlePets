@@ -1,9 +1,9 @@
-# BattlePets remake
+# BattlePets
 
 A like-for-like browser reimplementation of **BattlePets V1.0** (T2R Associates /
 Thom Robertson, 1999), rebuilt by reverse-engineering the original `BattlePets.exe`.
 
-The remake contains **no original content**. Stats, spells, wizard teams, dialogue,
+This project contains **no original content**. Stats, spells, wizard teams, dialogue,
 art, sounds and mazes are all read at runtime from your own copy of the game, the
 way OpenTTD or OpenRCT2 use original data files.
 
@@ -16,13 +16,13 @@ way OpenTTD or OpenRCT2 use original data files.
 Requires Node 20+ and no other dependencies.
 
 ```sh
-cd remake          # this folder, inside the original install
-npm start          # http://localhost:8080/
+npm start -- --original /path/to/BattlePets   # http://localhost:8080/
 ```
 
-The server serves the remake and the original install. It defaults to the parent
-folder; use `--original /path/to/BattlePets` and `--port N` to change that. File
-names are resolved case-insensitively, as on Windows. Click **Click to play** to
+`--original` points at your BattlePets install: the folder containing
+`BattlePets.exe`, `help.dat` and `dat/`. Add `--port N` to use another port. The
+server serves this project and your install, and resolves file names
+case-insensitively, as on Windows. Click **Click to play** to
 start (browsers need a click before playing sound).
 
 Saves use the original `.gam` text format, so saves from the 1999 game load here

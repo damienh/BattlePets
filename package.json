@@ -1,0 +1,15 @@
+{
+  "name": "battlepets-remake",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Like-for-like reimplementation of BattlePets (T2R Associates, 1999). Loads data and assets from an original install at runtime.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "coverage": "node --test --experimental-test-coverage test/*.test.js",
+    "start": "node tools/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
